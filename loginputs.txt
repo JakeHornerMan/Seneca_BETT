@@ -1,0 +1,4 @@
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npx tsc --init
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm init
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install express
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install @types/node @types/express

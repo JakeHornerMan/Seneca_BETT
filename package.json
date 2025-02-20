@@ -1,0 +1,20 @@
+{
+  "name": "seneca_bett",
+  "version": "1.0.0",
+  "description": "Seneca backend technical task, Node.js, TypeScript\r https://drive.google.com/file/d/1XReXrU4PJSRXEA9mRUf8kHmT1YMPCtLj/view?usp=sharing",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "prod": "ts-node --transpile-only src/app.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "express": "^4.21.2",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  }
+}
