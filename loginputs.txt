@@ -1,6 +1,12 @@
+//node_modules
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npx tsc --init
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm init
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install express
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install @types/node @types/express
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install jsonwebtoken bcryptjs
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install @types/jsonwebtoken @types/bcryptjs
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install typeorm
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install pg --save
+
+//DB
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> docker-compose up -d
