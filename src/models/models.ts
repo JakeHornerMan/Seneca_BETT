@@ -1,13 +1,15 @@
 // User Table
 export interface User {
-    userId: number;
-    name: string;
+    id: string;
+    username: string;
     email: string;
-    password: string;
-    school?: string;
-    userType?: string;
-    streak?: number;
+    password: string; // Hashed password
+    role: 'user' | 'admin';
+    createdAt: Date;
 }
+  
+// Example users
+export const users: User[] = [];
   
 // Course Table
 export interface Course {

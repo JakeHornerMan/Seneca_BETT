@@ -1,9 +1,10 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import { authenticateJWT } from '../middlewares/authMiddleware';
 import { Course } from '../models/models';
 
 const router = express.Router();
 
-router.get("/getById", (req: express.Request, res: express.Response) => {
+router.get("/getById", async(req: Request, res: Response) => {
     console.log(`Getting course by Id ${req.query.id}`);
     const course: Course = {
         courseId: Number(req.query.id) || 1,
@@ -14,7 +15,7 @@ router.get("/getById", (req: express.Request, res: express.Response) => {
     res.json(course);
 });
 
-router.post("", (req: express.Request, res: express.Response) => {
+router.post("", async(req: Request, res: Response) => {
     console.log("Received Course:", req.body);
     const { courseId, courseTitle, qualification, modules } = req.body;
     const course: Course = {
