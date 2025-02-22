@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import express from 'express';
 import { User } from '../models/User';
+import { Course } from '../models/Course';
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -11,19 +12,7 @@ export const AppDataSource = new DataSource({
     database: "postgres",
     synchronize: true,
     logging: true,
-    entities: [User],
+    entities: [User, Course],
     subscribers: [],
     migrations: [],
 });
-
-const userRepository = AppDataSource.getRepository(User);
-
-export const storeUser = (newUser: User) => {
-    // const userRepository = AppDataSource.getRepository(User);
-    let user = newUser;
-    userRepository.save(user);
-}
-
-// async export const doesUserExist = (username: string, email): bool => {
-    
-// }
