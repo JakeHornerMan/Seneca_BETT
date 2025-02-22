@@ -8,9 +8,6 @@ export interface User {
     createdAt: Date;
 }
   
-// Example users
-export const users: User[] = [];
-  
 // Course Table
 export interface Course {
     courseId: number;

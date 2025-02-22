@@ -63,7 +63,7 @@ const { username, password } = req.body;
     }
 
     const token = generateToken({
-        id: user.username,
+        id: user.id,
         role: user.role,
     });
     res.json({ token });

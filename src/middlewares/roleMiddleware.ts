@@ -7,7 +7,8 @@ export const authorizeRole = (role: string) => {
     const authHeader = req.headers.authorization; // Get 'Authorization' header
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'Unauthorized: No token provided' });
+        res.status(401).json({ message: 'Unauthorized: No token provided' });
+        return;
     }
 
     const token = authHeader.split(' ')[1]; // Extract the token (after 'Bearer ')
