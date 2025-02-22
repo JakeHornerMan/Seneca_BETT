@@ -1,17 +1,11 @@
 import express, {Request, Response} from 'express';
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../utils/jwt';
-import { users, User } from '../models/models';
+import { User } from '../models/User';
+import { AppDataSource } from '../repositorys/appDataSource';
 
 const router = express.Router();
-
-
-// Check if username or email is already in use
-const isUniqueUser = (username: string, email: string) => {
-    return !users.some(
-        (user) => user.username === username || user.email === email,
-    );
-};
+const userRepository = AppDataSource.getRepository(User);
   
 // User registration route
 router.post('/register', async (req: Request, res: Response) => {
@@ -24,28 +18,26 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 
     // Check if username or email is already taken
-    if (!isUniqueUser(username, email)) {
-        res
-        .status(400)
-        .json({ message: 'Username or email already in use' });
+    const existingUser = await userRepository.findOne({ where: [{ username }, { email }] });
+    if (existingUser) {
+        res.status(400).json({ message: 'Username or email already in use' });
         return;
     }
+    
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
-    const newUser: User = {
-        id: Date.now().toString(),
+    const newUser = userRepository.create({
         username,
         email,
         password: hashedPassword,
         role,
-        createdAt: new Date(),
-    };
+    });
 
-    // Save the new user to the array
-    users.push(newUser);
+    // Save the new user to db
+    await userRepository.save(newUser);
 
     res.status(201).json({ message: 'User registered successfully' });
 
@@ -57,23 +49,21 @@ router.post('/register', async (req: Request, res: Response) => {
 // User login route
 router.post('/login', async (req: Request, res: Response) => {
 const { username, password } = req.body;
-    const user = users.find((u) => u.username === username);
+    const user = await userRepository.findOne({ where: { username } });
 
     if (!user) {
-    console.log(`400: Invalid credentials`);
         res.status(400).json({ message: 'Invalid credentials' });
         return;
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-        console.log(`400: Invalid credentials`);
         res.status(400).json({ message: 'Invalid credentials' });
         return;
     }
 
     const token = generateToken({
-        userId: user.id,
+        id: user.username,
         role: user.role,
     });
     res.json({ token });

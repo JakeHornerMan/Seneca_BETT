@@ -9,9 +9,17 @@ router.get("/", authenticateJWT,(req: express.Request, res: express.Response) =>
     res.send("Hello world");
 });
 
-router.post("/data", authenticateJWT, authorizeRole('user'),  (req: express.Request, res: express.Response) => {
+router.post("/data", authenticateJWT,  (req: express.Request, res: express.Response) => {
     console.log(req.body);
     res.sendStatus(200);
+});
+
+router.get("/user", authenticateJWT, authorizeRole('user'),  (req: express.Request, res: express.Response) => {
+    res.send("User Functionality").sendStatus(200);
+});
+
+router.get("/admin", authenticateJWT, authorizeRole('admin'),  (req: express.Request, res: express.Response) => {
+    res.send("Admin Functionality").sendStatus(200);
 });
     
 export default router;
