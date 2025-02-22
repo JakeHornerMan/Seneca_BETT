@@ -5,6 +5,7 @@ const SECRET_KEY = process.env.JWT_SECRET_KEY || 'secret';
 export interface UserPayload {
     id: number;
     role: string;
+    currentSessionId: number;
 }
 
 // Generate a JWT for a user

@@ -4,6 +4,7 @@ import express from 'express';
 import test from './controllers/test';
 import courseRouter from './controllers/courseRouter';
 import authRouter from './controllers/authRouter';
+import sessionRouter from './controllers/SessionRouter';
 import { AppDataSource } from './repositorys/appDataSource';
 
 const app: express.Application = express();
@@ -17,6 +18,7 @@ const testRoutes = test;
 app.use('/test', testRoutes);
 app.use('/course', courseRouter);
 app.use('/auth', authRouter);
+app.use('/stats', sessionRouter);
 
 AppDataSource.initialize()
     .then(() => {
