@@ -15,16 +15,16 @@ INSERT INTO "module_stats"("moduleName", "adaptive", "quiz", "wrongAnswers", "se
 VALUES
 (
     'Integers', 
-    '[{"answers":["A", "B", "C", "A", "D"], "isCompleted": true, "score": 78}]', 
-    '[{"answers":["D", "A", "C", "B", "D", "A", "C", "B"], "isCompleted": true, "score": 74}]',
-    '[{"answers":["adaptive: 3", "quiz: 1"], "isCompleted": false, "score": 0}]', 
+    '{"answers":["A", "B", "C", "A", "D"], "isCompleted": true, "score": 78}', 
+    '{"answers":["D", "A", "C", "B", "D", "A", "C", "B"], "isCompleted": true, "score": 74}',
+    '{"answers":["adaptive: 3", "quiz: 1"], "isCompleted": false, "score": 0}', 
     'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
 ),
 (
     'Fractions',
-    '[{"answers":["A", "B", "C", "C", "D"], "isCompleted": true, "score": 82}]', 
-    '[{"answers":["C", "D", "B", "A", "D", "C"], "isCompleted": true, "score": 81}]',
-    '[{"answers":["adaptive: 4", "quiz: 5"], "isCompleted": false, "score": 0}]',
+    '{"answers":["A", "B", "C", "C", "D"], "isCompleted": true, "score": 82}',
+    '{"answers":["C", "D", "B", "A", "D", "C"], "isCompleted": true, "score": 81}',
+    '{"answers":["adaptive: 4", "quiz: 5"], "isCompleted": false, "score": 0}',
     'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
 );
 
@@ -45,16 +45,16 @@ INSERT INTO "module_stats"("moduleName", "adaptive", "quiz", "wrongAnswers", "se
 VALUES
 (
     'Macbeth', 
-    '[{"answers":["B", "A", "C", "D", "B", "C"], "isCompleted": true, "score": 92}]', 
-    '[{"answers":["C", "D", "A", "C", "B"], "isCompleted": true, "score": 78}]',
-    '[{"answers":["adaptive: 3", "quiz: 6"], "isCompleted": false, "score": 0}]', 
+    '{"answers":["B", "A", "C", "D", "B", "C"], "isCompleted": true, "score": 92}', 
+    '{"answers":["C", "D", "A", "C", "B"], "isCompleted": true, "score": 78}',
+    '{"answers":["adaptive: 3", "quiz: 6"], "isCompleted": false, "score": 0}', 
     'b2c3d4e5-f678-90ab-cdef-1234567890ab'
 ),
 (
     'Romeo and Juliet',
-    '[{"answers":["D", "A", "B", "C", "A", "C"], "isCompleted": true, "score": 97}]', 
-    '[{"answers":["B", "C", "A", "D"], "isCompleted": true, "score": 98}]',
-    '[{"answers":["adaptive: 2", "quiz: 8"], "isCompleted": false, "score": 0}]',
+    '{"answers":["D", "A", "B", "C", "A", "C"], "isCompleted": true, "score": 97}', 
+    '{"answers":["B", "C", "A", "D"], "isCompleted": true, "score": 98}',
+    '{"answers":["adaptive: 2", "quiz: 8"], "isCompleted": false, "score": 0}',
     'b2c3d4e5-f678-90ab-cdef-1234567890ab'
 );
 
@@ -75,15 +75,15 @@ INSERT INTO "module_stats"("moduleName", "adaptive", "quiz", "wrongAnswers", "se
 VALUES
 (
     'World War I', 
-    '[{"answers":["C", "B", "D", "A", "C"], "isCompleted": true, "score": 83}]', 
-    '[{"answers":["D", "A", "C", "B", "A"], "isCompleted": true, "score": 73}]',
-    '[{"answers":["adaptive: 7", "quiz: 2"], "isCompleted": false, "score": 0}]', 
+    '{"answers":["C", "B", "D", "A", "C"], "isCompleted": true, "score": 83}', 
+    '{"answers":["D", "A", "C", "B", "A"], "isCompleted": true, "score": 73}',
+    '{"answers":["adaptive: 7", "quiz: 2"], "isCompleted": false, "score": 0}', 
     'c3d4e5f6-7890-abcd-ef12-34567890abcd'
 ),
 (
     'World War II',
-    '[{"answers":["A", "C", "B", "D", "C", "A"], "isCompleted": true, "score": 90}]', 
-    '[{"answers":["B", "D", "A", "C", "A"], "isCompleted": true, "score": 79}]',
-    '[{"answers":["adaptive: 6", "quiz: 3"], "isCompleted": false, "score": 0}]',
+    '{"answers":["A", "C", "B", "D", "C", "A"], "isCompleted": true, "score": 90}', 
+    '{"answers":["B", "D", "A", "C", "A"], "isCompleted": true, "score": 79}',
+    '{"answers":["adaptive: 6", "quiz: 3"], "isCompleted": false, "score": 0}',
     'c3d4e5f6-7890-abcd-ef12-34567890abcd'
 );

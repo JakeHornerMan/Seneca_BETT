@@ -10,13 +10,13 @@ export class ModuleStats {
     moduleName!: string;
 
     @Column("json")
-    adaptive?: Array<{answers: string[], isCompleted: boolean, score: number }>;
+    adaptive?: {answers: string[], isCompleted: boolean, score: number };
 
     @Column("json")
-    quiz?: Array<{answers: string[], isCompleted: boolean, score: number }>;
+    quiz?: {answers: string[], isCompleted: boolean, score: number };
 
     @Column("json")
-    wrongAnswers?: Array<{ answers: string[], isCompleted: boolean, score: number}>;
+    wrongAnswers?: { answers: string[], isCompleted: boolean, score: number};
 
     @ManyToOne(() => SessionStats, sessionStats => sessionStats.modulesStats)
     @JoinColumn({ name: 'sessionId' })  // The foreign key column name in ModuleStats

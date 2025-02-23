@@ -33,6 +33,6 @@ export class SessionStats {
     @Column({ type: 'boolean', default: false })
     isEnd!: boolean;
 
-    @Column({nullable: true })
-    sessionPoints?: number;
+    @Column({default: 0 })
+    sessionPoints!: number;
 }

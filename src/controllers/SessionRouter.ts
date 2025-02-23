@@ -18,7 +18,7 @@ export const GetUser = (req: Request): UserPayload|undefined => {
     if (authHeader){
         const token = authHeader.split(' ')[1]; // Extract the token (after 'Bearer ')
 
-        console.log('Extracted Token:', token);
+        // console.log('Extracted Token:', token);
         return verifyToken(token);
     }
 };
@@ -90,11 +90,11 @@ router.put('/endSession', authenticateJWT, authorizeRole('user'), async (req: Re
             return;
         }
 
-        // const user = await GetUser(req);
-        // if (sessionStats.userId.id !== user?.id) {
-        //     res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
-        //     return;
-        // }
+        const user = await GetUser(req);
+        if (sessionStats.userId.id !== user?.id) {
+            res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
+            return;
+        }
 
         // Update sessionEnd to the current timestamp and set isEnd to true
         sessionStats.sessionEnd = new Date();
@@ -140,11 +140,11 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
             return;
         }
 
-        // const user = await GetUser(req);
-        // if (sessionStats.userId.id !== user?.id) {
-        //     res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
-        //     return;
-        // }
+        const user = await GetUser(req);
+        if (sessionStats.userId.id !== user?.id) {
+            res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
+            return;
+        }
 
         // Ensure moduleStats is a valid array
         if (!Array.isArray(moduleStats) || moduleStats.length === 0) {
@@ -152,6 +152,7 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
             return;
         }
 
+        let totalSessionPoints = 0;
         let updatedModulesStats;
         if(sessionStats.modulesStats){
             // Create a map of existing modules by moduleName for easy lookup
@@ -165,8 +166,22 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
                     if (existingModule) {
                         // Update the existing module
                         existingModule.adaptive = module.adaptive ?? existingModule.adaptive;
+                        console.log('Existing Adaptive:', existingModule.adaptive);
                         existingModule.quiz = module.quiz ?? existingModule.quiz;
+                        console.log('Existing Quiz:', existingModule.quiz);
                         existingModule.wrongAnswers = module.wrongAnswers ?? existingModule.wrongAnswers;
+                        
+                        let quizScore = 0;
+                        let adaptiveScore = 0;
+                        if(module.adaptive?.score)
+                            adaptiveScore = module.adaptive?.score;
+                        // console.log('Adaptive Score:', adaptiveScore);
+                        if(module.quiz?.score)
+                            quizScore = module.quiz?.score;
+                        // console.log('Quiz Score:', quizScore);
+                        totalSessionPoints += adaptiveScore + quizScore;
+
+                        // console.log('Total Session Points: Existing: ', totalSessionPoints);
                         return moduleStatsRepository.save(existingModule);
                     } else {
                         // Create a new module entry
@@ -177,6 +192,16 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
                             wrongAnswers: module.wrongAnswers ?? [],
                             sessionStats: sessionStats,  // Link module to session
                         });
+                        let quizScore = 0;
+                        let adaptiveScore = 0;
+                        if(module.adaptive?.score)
+                            adaptiveScore = module.adaptive?.score;
+                        // console.log('Adaptive Score:', adaptiveScore);
+                        if(module.quiz?.score)
+                            quizScore = module.quiz?.score;
+                        // console.log('Quiz Score:', quizScore);
+                        totalSessionPoints += adaptiveScore + quizScore;
+                        // console.log('Total Session Points: New: ', totalSessionPoints);
                         return moduleStatsRepository.save(newModule);
                     }
                 })
@@ -186,9 +211,12 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
             updatedModulesStats = moduleStats;
         }
 
+        console.log('Updated Modules:', updatedModulesStats);
+
         // Update the session's modulesStats
         sessionStats.modulesStats = updatedModulesStats;
         sessionStats.sessionEnd = new Date();
+        sessionStats.sessionPoints = totalSessionPoints;
 
         // Save the updated session
         await sessionStatsRepository.save(sessionStats);

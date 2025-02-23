@@ -13,7 +13,7 @@ export const authorizeRole = (role: string) => {
 
     const token = authHeader.split(' ')[1]; // Extract the token (after 'Bearer ')
 
-    console.log('Extracted Token:', token);
+    // console.log('Extracted Token:', token);
 
     const user = verifyToken(token); // Verify the token
     console.log(user);
