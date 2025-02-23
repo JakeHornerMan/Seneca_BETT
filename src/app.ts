@@ -12,6 +12,7 @@ import { AppDataSource } from './repositorys/appDataSource';
 const app: express.Application = express();
 
 const port = process.env.PORT || 3000;
+const dbhost = process.env.DB_HOST || 'localhost';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,7 +26,7 @@ app.use('/stats/user', userStatsRouter);
 
 AppDataSource.initialize()
     .then(() => {
-        console.log(`Connected to DB ${port}`);
+        console.log(`Connected to DB host ${dbhost}`);
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });

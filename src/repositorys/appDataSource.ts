@@ -5,10 +5,13 @@ import { Course } from '../models/Course';
 import { SessionStats } from '../models/SessionStats';
 import { ModuleStats } from '../models/ModuleStats';
 
+const host = process.env.DB_HOST || 'localhost';
+const port = process.env.DB_PORT || 5432;
+
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
-    port: 5432,
+    host: host,
+    port: Number(port),
     username: "postgres",
     password: "password",
     database: "postgres",

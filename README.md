@@ -21,8 +21,6 @@ The project should be submitted in the form of a code repository, hosted on Gith
 Please state any assumptions or deviations from the specification in the repository README
 Your service should have some level of tests
 
-
-The full API schema can be found here.
 Glossary
 Course: a group of topics relating to a particular subject
 Session: an instance of a user studying a topic within a course

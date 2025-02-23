@@ -5,7 +5,7 @@ import { ModuleStats } from "./ModuleStats";
 
 @Entity()
 export class SessionStats {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id!: number;
 
     @Index()
@@ -33,6 +33,6 @@ export class SessionStats {
     @Column({ type: 'boolean', default: false })
     isEnd!: boolean;
 
-    @Column({ type: 'timestamp', nullable: true })
+    @Column({nullable: true })
     sessionPoints?: number;
 }

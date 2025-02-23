@@ -132,4 +132,23 @@ router.get('/averageTime/:courseId', authenticateJWT, authorizeRole('user'), asy
     }
 });
 
+router.get('/courses/:courseId', authenticateJWT, authorizeRole('user'), async (req: Request, res: Response) => {
+    const { courseId } = req.params;
+    try {
+        //get Attached userid
+        const user = await GetUser(req);
+        if (!user) {
+            res.status(401).json({ message: 'User does not have Session data' });
+            return;
+        }
+
+        const sessionData = await GetAverageUserSessionTimeForCourse(courseId, user.id);
+        res.status(200).json(sessionData);
+    } catch (error) {
+        console.error('Error fetching session stats:', error);
+        res.status(500).json({ message: 'Internal server error' });
+        return;
+    }
+});
+
 export default router;
