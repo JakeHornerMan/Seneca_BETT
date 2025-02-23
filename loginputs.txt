@@ -7,6 +7,7 @@ C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install jsonwebtoken bcryptjs
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install @types/jsonwebtoken @types/bcryptjs
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install typeorm
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install pg --save
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install uuid
 
 //DB
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> docker-compose up -d

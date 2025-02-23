@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import { authenticateJWT } from '../middlewares/authMiddleware';
-import { Course } from '../models/Course';
 import { authorizeRole } from '../middlewares/roleMiddleware';
 import { AppDataSource } from '../repositorys/appDataSource';
 import { SessionStats } from '../models/SessionStats';
@@ -91,11 +90,11 @@ router.put('/endSession', authenticateJWT, authorizeRole('user'), async (req: Re
             return;
         }
 
-        const user = await GetUser(req);
-        if (sessionStats.userId.id !== user?.id) {
-            res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
-            return;
-        }
+        // const user = await GetUser(req);
+        // if (sessionStats.userId.id !== user?.id) {
+        //     res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
+        //     return;
+        // }
 
         // Update sessionEnd to the current timestamp and set isEnd to true
         sessionStats.sessionEnd = new Date();
@@ -141,11 +140,11 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
             return;
         }
 
-        const user = await GetUser(req);
-        if (sessionStats.userId.id !== user?.id) {
-            res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
-            return;
-        }
+        // const user = await GetUser(req);
+        // if (sessionStats.userId.id !== user?.id) {
+        //     res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
+        //     return;
+        // }
 
         // Ensure moduleStats is a valid array
         if (!Array.isArray(moduleStats) || moduleStats.length === 0) {

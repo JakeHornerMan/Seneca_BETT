@@ -32,4 +32,7 @@ export class SessionStats {
 
     @Column({ type: 'boolean', default: false })
     isEnd!: boolean;
+
+    @Column({ type: 'timestamp', nullable: true })
+    sessionPoints?: number;
 }
