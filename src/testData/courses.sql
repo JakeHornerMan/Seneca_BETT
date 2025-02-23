@@ -113,3 +113,95 @@ VALUES
     {"topic":"Geographical Skills","modules":["Fieldwork","Geographical Research","Map Reading"]}]', 
     DEFAULT
 );  
+
+--DAVID
+INSERT INTO "session_stats"("id", "userId", "courseId", "topic", "sessionStart", "sessionEnd", "isEnd", "sessionPoints")
+VALUES
+(
+    'dc01c6bc-3b58-4b34-8905-b63a7c8a47bb',
+    'c31f76f2-1e98-4429-9070-e41388ccf53e',
+    '6',
+    'Atomic Structure',
+    '2025-03-04 09:00:00',
+    '2025-03-04 12:00:00',
+    true,
+    310
+);
+
+INSERT INTO "module_stats"("moduleName", "adaptive", "quiz", "wrongAnswers", "sessionId")
+VALUES
+(
+    'Elements and Compounds',
+    '{"answers":["A", "B", "C", "D"], "isCompleted": true, "score": 85}', 
+    '{"answers":["A", "C", "B", "D"], "isCompleted": true, "score": 80}',
+    '{"answers":["adaptive: 3", "quiz: 2"], "isCompleted": false, "score": 0}', 
+    'dc01c6bc-3b58-4b34-8905-b63a7c8a47bb'
+),
+(
+    'Periodic Table',
+    '{"answers":["B", "A", "C", "D"], "isCompleted": true, "score": 90}', 
+    '{"answers":["C", "B", "A", "D"], "isCompleted": true, "score": 95}',
+    '{"answers":["adaptive: 4", "quiz: 5"], "isCompleted": false, "score": 0}', 
+    'dc01c6bc-3b58-4b34-8905-b63a7c8a47bb'
+);
+
+INSERT INTO "session_stats"("id", "userId", "courseId", "topic", "sessionStart", "sessionEnd", "isEnd", "sessionPoints")
+VALUES
+(
+    'ef23c5ae-d62a-4c5d-906e-3bb19e1d241f',
+    'c31f76f2-1e98-4429-9070-e41388ccf53e',
+    '5',
+    'Electricity',
+    '2025-03-05 10:00:00',
+    '2025-03-05 13:00:00',
+    true,
+    295
+);
+
+INSERT INTO "module_stats"("moduleName", "adaptive", "quiz", "wrongAnswers", "sessionId")
+VALUES
+(
+    'Current and Voltage',
+    '{"answers":["B", "D", "A", "C"], "isCompleted": true, "score": 90}', 
+    '{"answers":["A", "B", "C", "D"], "isCompleted": true, "score": 85}',
+    '{"answers":["adaptive: 3", "quiz: 4"], "isCompleted": false, "score": 0}', 
+    'ef23c5ae-d62a-4c5d-906e-3bb19e1d241f'
+),
+(
+    'Resistance and Power',
+    '{"answers":["C", "B", "D", "A"], "isCompleted": true, "score": 85}', 
+    '{"answers":["D", "C", "A", "B"], "isCompleted": true, "score": 90}',
+    '{"answers":["adaptive: 4", "quiz: 3"], "isCompleted": false, "score": 0}', 
+    'ef23c5ae-d62a-4c5d-906e-3bb19e1d241f'
+);
+
+INSERT INTO "session_stats"("id", "userId", "courseId", "topic", "sessionStart", "sessionEnd", "isEnd", "sessionPoints")
+VALUES
+(
+    '0b883d80-d7d5-4a13-a167-68ea4b4697e7',
+    'c31f76f2-1e98-4429-9070-e41388ccf53e',
+    '2',
+    'Algebra',
+    '2025-03-06 11:00:00',
+    '2025-03-06 14:00:00',
+    true,
+    340
+);
+
+INSERT INTO "module_stats"("moduleName", "adaptive", "quiz", "wrongAnswers", "sessionId")
+VALUES
+(
+    'Linear Equations',
+    '{"answers":["A", "B", "C", "D"], "isCompleted": true, "score": 85}', 
+    '{"answers":["C", "A", "B", "D"], "isCompleted": true, "score": 80}',
+    '{"answers":["adaptive: 3", "quiz: 2"], "isCompleted": false, "score": 0}', 
+    '0b883d80-d7d5-4a13-a167-68ea4b4697e7'
+),
+(
+    'Inequalities',
+    '{"answers":["B", "D", "A", "C"], "isCompleted": true, "score": 90}', 
+    '{"answers":["A", "B", "C", "D"], "isCompleted": true, "score": 85}',
+    '{"answers":["adaptive: 4", "quiz: 3"], "isCompleted": false, "score": 0}', 
+    '0b883d80-d7d5-4a13-a167-68ea4b4697e7'
+);
+
