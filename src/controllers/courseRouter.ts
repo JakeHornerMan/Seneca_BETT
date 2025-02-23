@@ -33,7 +33,17 @@ router.get('/:courseIdentifier', async (req: Request, res: Response) => {
     const { courseIdentifier } = req.params; // Retrieve the courseTitle from the URL params
 
     try {
-        const course = GetCourse(courseIdentifier);
+
+        let course;
+
+        if (!isNaN(Number(courseIdentifier))) {
+            course = await courseRepository.findOne({ where: { id: Number(courseIdentifier) } });
+        }
+        
+        // If course not found by ID, try to find it by courseTitle (if it's a string)
+        if (!course) {
+            course = await courseRepository.findOne({ where: { courseTitle: courseIdentifier } });
+        }
 
         // If no course is found, return 404
         if (!course) {

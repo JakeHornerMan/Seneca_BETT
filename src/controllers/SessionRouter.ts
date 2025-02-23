@@ -76,20 +76,30 @@ router.put('/endSession', authenticateJWT, authorizeRole('user'), async (req: Re
 
     try {
         // Find the session by sessionId
-        const sessionStats = await sessionStatsRepository.findOne({ where: { id: sessionId } });
+        const sessionStats = await sessionStatsRepository.findOne({
+            where: { id: sessionId },
+            relations: ["userId"],
+        });
 
         if (!sessionStats) {
             res.status(404).json({ message: 'Session not found' });
             return;
         }
 
-        if (sessionStats.sessionEnd) {
+        if (sessionStats.isEnd) {
             res.status(400).json({ message: 'Session already ended' });
             return;
         }
 
-        // Update sessionEnd to the current timestamp
+        const user = await GetUser(req);
+        if (sessionStats.userId.id !== user?.id) {
+            res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
+            return;
+        }
+
+        // Update sessionEnd to the current timestamp and set isEnd to true
         sessionStats.sessionEnd = new Date();
+        sessionStats.isEnd = true;
 
         // Save the updated session
         await sessionStatsRepository.save(sessionStats);
@@ -118,7 +128,7 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
         // Find the session by sessionId and load existing modules
         const sessionStats = await sessionStatsRepository.findOne({
             where: { id: sessionId },
-            relations: ['modulesStats'], // Load existing modulesStats
+            relations: ['modulesStats','userId'], // Load existing modulesStats
         });
 
         if (!sessionStats) {
@@ -126,8 +136,14 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
             return;
         }
 
-        if (sessionStats.sessionEnd) {
+        if (sessionStats.isEnd) {
             res.status(400).json({ message: 'Session already ended' });
+            return;
+        }
+
+        const user = await GetUser(req);
+        if (sessionStats.userId.id !== user?.id) {
+            res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
             return;
         }
 
@@ -173,6 +189,7 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
 
         // Update the session's modulesStats
         sessionStats.modulesStats = updatedModulesStats;
+        sessionStats.sessionEnd = new Date();
 
         // Save the updated session
         await sessionStatsRepository.save(sessionStats);

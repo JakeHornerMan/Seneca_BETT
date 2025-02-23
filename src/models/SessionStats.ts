@@ -29,4 +29,7 @@ export class SessionStats {
 
     @Column({ type: 'timestamp', nullable: true })
     sessionEnd?: Date;
+
+    @Column({ type: 'boolean', default: false })
+    isEnd!: boolean;
 }
