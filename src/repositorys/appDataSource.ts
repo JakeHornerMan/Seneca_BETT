@@ -5,7 +5,7 @@ import { Course } from '../models/Course';
 import { SessionStats } from '../models/SessionStats';
 import { ModuleStats } from '../models/ModuleStats';
 
-const host = process.env.DB_HOST || 'postgres.crwaegimasjl.eu-west-1.rds.amazonaws.com';
+const host = process.env.DB_HOST || 'localhost';
 const port = process.env.DB_PORT || 5432;
 const username = process.env.DB_USERNAME || "postgres";
 const password = process.env.DB_PASSWORD || "password";

@@ -1,0 +1,654 @@
+{
+	"info": {
+		"_postman_id": "bdd211a7-5bca-4f0c-b4df-cf314116edc9",
+		"name": "SenecaPROD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21022898"
+	},
+	"item": [
+		{
+			"name": "http://3.250.35.61:3000/test/data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"input\":\"blah\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.250.35.61:3000/test/data",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"test",
+						"data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://3.250.35.61:3000/test/user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/test/user",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"test",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(ADMIN)http://3.250.35.61:3000/auth/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"prodadmin\",\r\n  \"email\": \"prodadmin.test@example.com\",\r\n  \"password\": \"securePassword123\",\r\n  \"role\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.250.35.61:3000/auth/register",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(USER)http://3.250.35.61:3000/auth/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"jake\",\r\n  \"email\": \"prodadmin.test@example.com\",\r\n  \"password\": \"securePassword123\",\r\n  \"role\": \"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.250.35.61:3000/auth/register",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://3.250.35.61:3000/auth/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"jake\",\r\n  \"password\": \"securePassword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.250.35.61:3000/auth/login",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(USER)http://3.250.35.61:3000/test/user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/test/user",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"test",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://3.250.35.61:3000/test",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/test",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://3.250.35.61:3000/course/:courseId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/course/c3d4e5f6-7890-1234-5678-9abcdef01234",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"course",
+						"c3d4e5f6-7890-1234-5678-9abcdef01234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(ADMIN)http://3.250.35.61:3000/course/create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"courseTitle\": \"Fundamentals of Artificial Intelligence\",\r\n    \"qualification\": \"Master's Degree\",\r\n    \"topicsAndModules\": [\r\n        {\r\n            \"topic\": \"Introduction to AI\",\r\n            \"modules\": [\r\n                \"History of AI\",\r\n                \"AI Applications\",\r\n                \"Ethics in AI\"\r\n            ]\r\n        },\r\n        {\r\n            \"topic\": \"Machine Learning\",\r\n            \"modules\": [\r\n                \"Supervised Learning\",\r\n                \"Unsupervised Learning\",\r\n                \"Reinforcement Learning\"\r\n            ]\r\n        },\r\n        {\r\n            \"topic\": \"Neural Networks\",\r\n            \"modules\": [\r\n                \"Perceptrons\",\r\n                \"Backpropagation\",\r\n                \"Convolutional Neural Networks\"\r\n            ]\r\n        },\r\n        {\r\n            \"topic\": \"Natural Language Processing\",\r\n            \"modules\": [\r\n                \"Tokenization\",\r\n                \"Named Entity Recognition\",\r\n                \"Sentiment Analysis\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.250.35.61:3000/course/create",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"course",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(USER)http://3.250.35.61:3000/session/startSession",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"courseIdentifier\": \"9e263811-0cfb-45f0-a0f9-c155c916dfed\",\r\n    \"topic\": \"Geometry\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.250.35.61:3000/session/startSession",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"session",
+						"startSession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(USER)http://3.250.35.61:3000/session/updateSession",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionId\": \"93c0f0b9-9845-458d-a631-6ff6a1180ad3\",\r\n  \"moduleStats\": [\r\n    {\r\n      \"moduleName\": \"Module 1\",\r\n      \"adaptive\": {\"answers\": [\"A\", \"B\"], \"isCompleted\": false, \"score\": 10},\r\n      \"quiz\":{\"answers\": [\"A\", \"B\"], \"isCompleted\": false, \"score\": 20}\r\n    },\r\n    {\r\n      \"moduleName\": \"Module 2\",\r\n      \"quiz\": {\"answers\": [\"A\", \"B\"], \"isCompleted\": false, \"score\": 10}\r\n    },\r\n    {\r\n      \"moduleName\": \"Module 3\",\r\n      \"adaptive\": {\"answers\": [\"A\", \"B\"], \"isCompleted\": false, \"score\": 40},\r\n      \"quiz\": {\"answers\": [\"A\", \"B\"], \"isCompleted\": false, \"score\": 2}\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.250.35.61:3000/session/updateSession",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"session",
+						"updateSession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(USER)http://3.250.35.61:3000/session/endSession",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionId\": \"93c0f0b9-9845-458d-a631-6ff6a1180ad3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.250.35.61:3000/session/endSession",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"session",
+						"endSession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(USER)http://3.250.35.61:3000/stats/user/sessions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/stats/user/sessions",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"stats",
+						"user",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(USER)http://3.250.35.61:3000/stats/user/courses/:courseId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/stats/user/courses/9e263811-0cfb-45f0-a0f9-c155c916dfed",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"stats",
+						"user",
+						"courses",
+						"9e263811-0cfb-45f0-a0f9-c155c916dfed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(USER)http://3.250.35.61:3000/stats/user/courses/:courseId/sessions/:sessionId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "sessions",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://3.250.35.61:3000/stats/user/courses/9e263811-0cfb-45f0-a0f9-c155c916dfed/sessions/93c0f0b9-9845-458d-a631-6ff6a1180ad3",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"stats",
+						"user",
+						"courses",
+						"9e263811-0cfb-45f0-a0f9-c155c916dfed",
+						"sessions",
+						"93c0f0b9-9845-458d-a631-6ff6a1180ad3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(ADMIN)http://3.250.35.61:3000/stats/sessions/:courseId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/stats/sessions/9e263811-0cfb-45f0-a0f9-c155c916dfed",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"stats",
+						"sessions",
+						"9e263811-0cfb-45f0-a0f9-c155c916dfed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(ADMIN)http://3.250.35.61:3000/stats/courses/:courseId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/stats/courses/9e263811-0cfb-45f0-a0f9-c155c916dfed",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"stats",
+						"courses",
+						"9e263811-0cfb-45f0-a0f9-c155c916dfed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(ADMIN)http://3.250.35.61:3000/stats/courses/:courseId/sessions/:sessionId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.250.35.61:3000/stats/courses/b9d1c2f3-8e76-4d2f-bdc4-8a3f93c27d12/sessions/0b883d80-d7d5-4a13-a167-68ea4b4697e7",
+					"protocol": "http",
+					"host": [
+						"3",
+						"250",
+						"35",
+						"61"
+					],
+					"port": "3000",
+					"path": [
+						"stats",
+						"courses",
+						"b9d1c2f3-8e76-4d2f-bdc4-8a3f93c27d12",
+						"sessions",
+						"0b883d80-d7d5-4a13-a167-68ea4b4697e7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
