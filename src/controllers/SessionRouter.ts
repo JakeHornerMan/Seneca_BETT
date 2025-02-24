@@ -11,6 +11,9 @@ const router = express.Router();
 const sessionStatsRepository = AppDataSource.getRepository(SessionStats);
 const moduleStatsRepository = AppDataSource.getRepository(ModuleStats);
 
+export const DoesCourseContainTopic = (course: any, topic: string): boolean => {
+    return course.topicsAndModules.some((element: any) => element.topic === topic);
+};
 
 export const GetUser = (req: Request): UserPayload|undefined => {
     const authHeader = req.headers.authorization; // Get 'Authorization' header
@@ -36,8 +39,14 @@ router.post('/startSession', authenticateJWT, authorizeRole('user'), async (req:
     }
 
     let course = await GetCourse(courseIdentifier);
+    console.log('Course:', course);
     if (!course) {
         res.status(401).json({ message: 'Course does not exist' });
+        return;
+    }
+
+    if (DoesCourseContainTopic(course, topic) === false) {
+        res.status(401).json({ message: 'Course topic does not exist' });
         return;
     }
 
@@ -46,6 +55,7 @@ router.post('/startSession', authenticateJWT, authorizeRole('user'), async (req:
         const sessionStats = sessionStatsRepository.create({
             userId:user.id,
             courseId:course.id,
+            courseTitle:course.courseTitle,
             topic,
             sessionStart: new Date(),
         });
@@ -90,11 +100,11 @@ router.put('/endSession', authenticateJWT, authorizeRole('user'), async (req: Re
             return;
         }
 
-        // const user = await GetUser(req);
-        // if (sessionStats.userId.id !== user?.id) {
-        //     res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
-        //     return;
-        // }
+        const user = await GetUser(req);
+        if (sessionStats.userId.id !== user?.id) {
+            res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
+            return;
+        }
 
         // Update sessionEnd to the current timestamp and set isEnd to true
         sessionStats.sessionEnd = new Date();
@@ -140,11 +150,11 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
             return;
         }
 
-        // const user = await GetUser(req);
-        // if (sessionStats.userId.id !== user?.id) {
-        //     res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
-        //     return;
-        // }
+        const user = await GetUser(req);
+        if (sessionStats.userId.id !== user?.id) {
+            res.status(401).json({ message: 'Unauthorized: Session does not belong to user' });
+            return;
+        }
 
         // Ensure moduleStats is a valid array
         if (!Array.isArray(moduleStats) || moduleStats.length === 0) {

@@ -11,15 +11,10 @@ const courseRepository = AppDataSource.getRepository(Course);
 export const GetCourse = async (courseIdentifier: string): Promise<Course | null> => {
     let course;
     // Try to find course by ID (if courseIdentifier is a number)
-    if (!isNaN(Number(courseIdentifier))) {
-        course = await courseRepository.findOne({ where: { id: Number(courseIdentifier) } });
+    if (courseIdentifier) {
+        course = await courseRepository.findOne({ where: { id: courseIdentifier } });
     }
     
-    // If course not found by ID, try to find it by courseTitle (if it's a string)
-    if (!course) {
-        course = await courseRepository.findOne({ where: { courseTitle: courseIdentifier } });
-    }
-
     // If no course is found, return 404
     if (!course) {
         return null;
@@ -36,15 +31,10 @@ router.get('/:courseIdentifier', async (req: Request, res: Response) => {
 
         let course;
 
-        if (!isNaN(Number(courseIdentifier))) {
-            course = await courseRepository.findOne({ where: { id: Number(courseIdentifier) } });
+        if(courseIdentifier){
+            course = await courseRepository.findOne({ where: { id: courseIdentifier } });
         }
         
-        // If course not found by ID, try to find it by courseTitle (if it's a string)
-        if (!course) {
-            course = await courseRepository.findOne({ where: { courseTitle: courseIdentifier } });
-        }
-
         // If no course is found, return 404
         if (!course) {
             res.status(404).json({ message: 'Course not found' });
@@ -87,7 +77,7 @@ router.put('/:courseIdentifier', authenticateJWT, authorizeRole('admin'), async 
 
         // Try to find course by ID (if courseIdentifier is a number)
         if (!isNaN(Number(courseIdentifier))) {
-            course = await courseRepository.findOne({ where: { id: Number(courseIdentifier) } });
+            course = await courseRepository.findOne({ where: { id: courseIdentifier } });
         }
 
         // If course not found by ID, try to find it by courseTitle (if it's a string)

@@ -18,6 +18,9 @@ export class SessionStats {
     @JoinColumn({ name: 'courseId' })
     courseId!: number;
 
+    @Column({nullable: true })
+    courseTitle!: string;
+
     @Column()
     topic!: string;
 

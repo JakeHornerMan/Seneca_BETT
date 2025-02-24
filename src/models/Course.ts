@@ -2,8 +2,8 @@ import { PrimaryGeneratedColumn, Column, Entity, CreateDateColumn } from "typeor
 
 @Entity()
 export class Course {
-    @PrimaryGeneratedColumn()
-    id!: number;
+    @PrimaryGeneratedColumn('uuid')
+    id!: string;
     @Column({ unique: true })
     courseTitle!: string;
     @Column()

@@ -1,19 +1,11 @@
 import express, { Request, Response } from 'express';
 import { authenticateJWT } from '../middlewares/authMiddleware';
-import { Course } from '../models/Course';
 import { authorizeRole } from '../middlewares/roleMiddleware';
-import { AppDataSource } from '../repositorys/appDataSource';
-import { SessionStats } from '../models/SessionStats';
-import { ModuleStats } from '../models/ModuleStats';
-import { UserPayload, verifyToken } from '../utils/jwt';
-import { GetCourse } from './courseRouter';
 import { GetUser } from './SessionRouter';
-import { GetSessionDataByCourseAndUserId, GetSessionDataByUserId, UserStatsOnCourse, UserStatsOnCourseSession } from '../service/StatService';
+import { GetSessionDataByUserId, UserStatsOnCourse, UserStatsOnCourseSession } from '../service/StatService';
 
 const router = express.Router();
 
-const sessionStatsRepository = AppDataSource.getRepository(SessionStats);
-const moduleStatsRepository = AppDataSource.getRepository(ModuleStats);
 
 router.get('/courses/:courseId', authenticateJWT, authorizeRole('user'), async (req: Request, res: Response) => {
     const { courseId } = req.params;
