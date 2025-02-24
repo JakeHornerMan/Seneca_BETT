@@ -4,7 +4,7 @@
 ><li>Admin can create Courses and view stats for any session, user or course. </li>
 ><li>Users can  start, update and end thie own sessions adding their own session and module results data</li>
 
-<h3>PLEAESE IMPORT [SenecaPROD.postman_collection.json](https://github.com/JakeHornerMan/Seneca_BETT/blob/main/SenecaPROD.postman_collection.json) IN POSTMAN<h3>
+<h3>PLEAESE IMPORT 'SenecaPROD.postman_collection.json' IN POSTMAN (https://github.com/JakeHornerMan/Seneca_BETT/blob/main/SenecaPROD.postman_collection.json)<h3>
 <hr>
 
 ##List of avalible Important endpoints
@@ -88,7 +88,7 @@
 <p>This will gather all session data based on the user logged in</p>
 <br/>
 <b>(USER)stats/courses/:courseId</b><br/>
-<p>This will allow us to see all related stats based on the courseId selected</p>
+<p>This will allow us to see all related stats based on the courseId selected for the user</p>
 <i>output: <br/>
 {<br/>
     "moduleAmount": {<br/>
@@ -111,7 +111,7 @@
 </i>
 <br/>
 <b>(USER)/stats/user/courses/:courseId/sessions/:sessionId</b><br/>
-<p>This will allow us to see all related stats based on the courseId selected and target a sepcific sessoion</p>
+<p>This will allow us to see all related stats based on the courseId selected and target a sepcific sessoion selected for the user</p>
 <i>output: <br/>
 {<br/>
     "moduleAmount": {<br/>
@@ -133,3 +133,5 @@
 }<br/>
 </i>
 <br/>
+
+###User Session Functionality
