@@ -5,9 +5,195 @@ import { AppDataSource } from "../repositorys/appDataSource";
 const sessionStatsRepository = AppDataSource.getRepository(SessionStats);
 const moduleStatsRepository = AppDataSource.getRepository(ModuleStats);
 
+export const UserStatsOnCourse = async (courseId: string, userId: any) => {
+    try {
+        const sessions = await GetSessionDataByCourseAndUserId(courseId, userId);
+        console.log(sessions);
+
+        if (!Array.isArray(sessions)) {
+            return sessions;  
+        }
+        else{
+            const sessionTime = GetTotalSessionTime(sessions);
+            const moduleAmount = GetTotalModulesStudied(sessions);
+            const scores = GetAverageModuleScore(sessions);
+
+            return {
+                moduleAmount,
+                sessionTime,
+                scores,
+            };
+        }
+    } catch (error) {
+        console.error('Error in StatsOnCourseSessions:', error);
+        return { message: 'Internal server error' };  // Return a general internal server error
+    }
+};
+
+export const StatsOnCourse = async (courseId: string) => {
+    try {
+        const sessions = await GetSessionDataByCourseId(courseId);
+        console.log(sessions);
+
+        if (!Array.isArray(sessions)) {
+            return sessions;  
+        }
+        else{
+            const sessionTime = GetTotalSessionTime(sessions);
+            const moduleAmount = GetTotalModulesStudied(sessions);
+            const scores = GetAverageModuleScore(sessions);
+
+            return {
+                moduleAmount,
+                sessionTime,
+                scores,
+            };
+        }
+    } catch (error) {
+        console.error('Error in StatsOnCourseSessions:', error);
+        return { message: 'Internal server error' };  // Return a general internal server error
+    }
+};
+
+export const UserStatsOnCourseSession = async (courseId: string, userId: any, sessionId: any) => {
+    try {
+        const sessions = await GetSessionDataByCourseUserAndSessionId(courseId, userId, sessionId);
+        console.log(sessions);
+
+        if (!Array.isArray(sessions)) {
+            return sessions;  
+        }
+        else{
+            const sessionTime = GetTotalSessionTime(sessions);
+            const moduleAmount = GetTotalModulesStudied(sessions);
+            const scores = GetAverageModuleScore(sessions);
+
+            return {
+                sessionId,
+                moduleAmount,
+                scores,
+                sessionTime,
+            };
+        }
+    } catch (error) {
+        console.error('Error in StatsOnCourseSessions:', error);
+        return { message: 'Internal server error' };  // Return a general internal server error
+    }
+};
+
+export const StatsOnCourseSession = async (courseId: string, sessionId: any) => {
+    try {
+        const sessions = await GetSessionDataByCourseAndSessionId(courseId, sessionId);
+        console.log(sessions);
+
+        if (!Array.isArray(sessions)) {
+            return sessions;  
+        }
+        else{
+            const sessionTime = GetTotalSessionTime(sessions);
+            const moduleAmount = GetTotalModulesStudied(sessions);
+            const scores = GetAverageModuleScore(sessions);
+
+            return {
+                sessionId,
+                moduleAmount,
+                scores,
+                sessionTime,
+            };
+        }
+    } catch (error) {
+        console.error('Error in StatsOnCourseSessions:', error);
+        return { message: 'Internal server error' };  // Return a general internal server error
+    }
+};
+
+export const GetTotalModulesStudied = (sessions: any[]) => {
+    try {
+        const studiedModules = new Set<string>();
+
+        sessions.forEach((session) => {
+            if (session.modulesStats && session.modulesStats.length > 0) {
+                session.modulesStats.forEach((module: any) => {
+                    studiedModules.add(module.moduleName);
+                });
+            }
+        });
+
+        const modulesArray = Array.from(studiedModules).sort();
+        return { totalModulesStudied: modulesArray.length, moduleNames: modulesArray };
+    } catch (error) {
+        console.error('Error calculating total modules studied:', error);
+        return { message: 'Internal server error: GetTotalModulesStudied' };
+    }
+};
+
+export const GetAverageModuleScore = (sessions: any[]) => {
+    try {
+        let totalScore = 0;
+        let totalModules = 0;
+        let totalSessionPoints = 0;
+
+        sessions.forEach((session) => {
+            totalSessionPoints += session.sessionPoints;
+
+            session.modulesStats.forEach((module: any) => {
+                const adaptiveScore = module.adaptive.score || 0;
+                const quizScore = module.quiz.score || 0;
+
+                const averageScore = (adaptiveScore + quizScore) / 2;
+
+                totalScore += averageScore;
+                totalModules += 1;
+            });
+        });
+
+        const overallAverageScore = totalModules > 0 ? totalScore / totalModules : 0;
+
+        return { 
+            totalSessionPoints, 
+            overallAverageScore 
+        };
+    } catch (error) {
+        console.error('Error calculating overall average module score:', error);
+        return { message: 'Internal server error: GetAverageModuleScore' };
+    }
+};
+
+export const GetTotalSessionTime = (sessions: any[]) => {
+    try {
+        let totalDurationInMs = 0;
+
+        sessions.forEach((session) => {
+            const sessionStart = new Date(session.sessionStart);
+            const sessionEnd = new Date(session.sessionEnd);
+
+            if (!sessionEnd || isNaN(sessionEnd.getTime()) || !session.isEnd) {
+                return;
+            }
+
+            const durationInMs = sessionEnd.getTime() - sessionStart.getTime();
+
+            totalDurationInMs += durationInMs;
+        });
+
+        // Convert the total duration in milliseconds to hours and minutes
+        const totalHours = Math.floor(totalDurationInMs / (1000 * 60 * 60));
+        const totalMinutes = Math.floor((totalDurationInMs % (1000 * 60 * 60)) / (1000 * 60));
+
+        // Calculate total time in minutes
+        const timeInMinutes = Math.floor(totalDurationInMs / (1000 * 60));
+
+        const totalDuration = `${totalHours} hours ${totalMinutes} minutes`;
+
+        return { totalDuration, timeInMinutes };
+    } catch (error) {
+        console.error('Error calculating total session time:', error);
+        return { message: 'Internal server error: GetTotalSessionTime' };
+    }
+};
+
 export const GetSessionDataByUserId = async (userId: any) => {
     try {
-        // Fetch session stats from the database
         const sessions = await sessionStatsRepository
             .createQueryBuilder('session')
             .leftJoinAndSelect('session.modulesStats', 'moduleStats')
@@ -18,7 +204,6 @@ export const GetSessionDataByUserId = async (userId: any) => {
             return { message: 'No session stats found for this user' };
         }
 
-        // Send the data back
         return sessions;
     } catch (error) {
         console.error('Error fetching session stats:', error);
@@ -28,18 +213,16 @@ export const GetSessionDataByUserId = async (userId: any) => {
 
 export const GetSessionDataByCourseId = async (courseId: string) => {
     try {
-        // Fetch session stats from the database by courseId
         const sessions = await sessionStatsRepository
             .createQueryBuilder('session')
-            .leftJoinAndSelect('session.modulesStats', 'moduleStats')  // Joining the related moduleStats
-            .where('session.courseId = :courseId', { courseId })  // Fetch by courseId
+            .leftJoinAndSelect('session.modulesStats', 'moduleStats')
+            .where('session.courseId = :courseId', { courseId })
             .getMany();
 
         if (sessions.length === 0) {
             return { message: 'No session stats found for this course' };
         }
 
-        // Return the session data for the provided courseId
         return sessions;
     } catch (error) {
         console.error('Error fetching session stats:', error);
@@ -47,21 +230,19 @@ export const GetSessionDataByCourseId = async (courseId: string) => {
     }
 };
 
-export const GetSessionDataByCourseAndUserId = async (courseId: string, userId: any) => {
+export const GetSessionDataByCourseAndUserId = async (courseId: string, userId: number) => {
     try {
-        // Fetch session stats from the database by courseId and userId
         const sessions = await sessionStatsRepository
             .createQueryBuilder('session')
-            .leftJoinAndSelect('session.modulesStats', 'moduleStats')  // Joining the related moduleStats
-            .where('session.courseId = :courseId', { courseId })  // Filter by courseId
-            .andWhere('session.userId = :userId', { userId })  // Filter by userId
+            .leftJoinAndSelect('session.modulesStats', 'moduleStats')
+            .where('session.courseId = :courseId', { courseId })
+            .andWhere('session.userId = :userId', { userId })
             .getMany();
 
         if (sessions.length === 0) {
             return { message: 'No session stats found for this course and user' };
         }
 
-        // Return the session data for the provided courseId and userId
         return sessions;
     } catch (error) {
         console.error('Error fetching session stats:', error);
@@ -69,187 +250,43 @@ export const GetSessionDataByCourseAndUserId = async (courseId: string, userId: 
     }
 };
 
-export const GetUserSessionTimes = async (userId: any) => {
+export const GetSessionDataByCourseAndSessionId = async (courseId: string, sessionId: string) => {
     try {
-        const sessions = await GetSessionDataByUserId(userId);
+        const sessions = await sessionStatsRepository
+            .createQueryBuilder('session')
+            .leftJoinAndSelect('session.modulesStats', 'moduleStats')
+            .where('session.courseId = :courseId', { courseId })
+            .andWhere('session.id = :sessionId', { sessionId }) // Add filter for sessionId
+            .getMany();
 
-        if (!Array.isArray(sessions)) {
-            return sessions;  
+        if (sessions.length === 0) {
+            return { message: 'No session stats found for this course, user, and session' };
         }
-        else{
 
-            const sessionTimes = await GetSessionTimes(sessions);
-
-            return sessionTimes;
-        }
+        return sessions;
     } catch (error) {
-        console.error('Error in GetUserSessionTimes:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
-    }
-};
-
-export const GetUserCourseSessionTimes = async (courseId: string, userId: any) => {
-    try {
-        const sessions = await GetSessionDataByCourseAndUserId(courseId, userId);
-
-        if (!Array.isArray(sessions)) {
-            return sessions;  
-        }
-        else{
-
-            const sessionTimes = await GetSessionTimes(sessions);
-
-            return sessionTimes;
-        }
-    } catch (error) {
-        console.error('Error in GetUserSessionTimes:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
-    }
-};
-
-export const GetCourseSessionTimes = async (courseId: string) => {
-    try {
-        const sessions = await GetSessionDataByCourseId(courseId);
-
-        if (!Array.isArray(sessions)) {
-            return sessions;  
-        }
-        else{
-
-            const sessionTimes = await GetSessionTimes(sessions);
-
-            return sessionTimes;
-        }
-    } catch (error) {
-        console.error('Error in GetUserSessionTimes:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
-    }
-};
-
-export const GetSessionTimes = (sessions: any[]) => {
-    try {
-        // Check if sessions data is available
-        if (!sessions || sessions.length === 0) {
-            return { message: 'No session data available' };
-        }
-
-        // Calculate the duration for each session and return only the necessary fields
-        const sessionsWithDuration = sessions.map((session) => {
-            const sessionStart = new Date(session.sessionStart);
-            const sessionEnd = new Date(session.sessionEnd);
-
-            // Check if sessionEnd is valid (session is completed)
-            if (!sessionEnd || isNaN(sessionEnd.getTime())) {
-                return { 
-                    id: session.id, 
-                    topic: session.topic, 
-                    sessionStart: session.sessionStart, 
-                    sessionEnd: session.sessionEnd, 
-                    duration: 'Session not ended yet' 
-                };
-            }
-
-            // Calculate the duration in milliseconds
-            const durationInMs = sessionEnd.getTime() - sessionStart.getTime();
-
-            // Convert milliseconds to hours and minutes
-            const hours = Math.floor(durationInMs / (1000 * 60 * 60));
-            const minutes = Math.floor((durationInMs % (1000 * 60 * 60)) / (1000 * 60));
-
-            // Add the duration to the session object in a human-readable format
-            const duration = `${hours} hours ${minutes} minutes`;
-
-            // Return only the necessary fields along with the duration
-            return { 
-                id: session.id, 
-                topic: session.topic, 
-                sessionStart: session.sessionStart, 
-                sessionEnd: session.sessionEnd, 
-                duration 
-            };
-        });
-
-        // Return the session data with the calculated durations
-        return sessionsWithDuration;
-    } catch (error) {
-        console.error('Error calculating session times:', error);
+        console.error('Error fetching session stats:', error);
         return { message: 'Internal server error' };
     }
 };
 
-export const GetAverageUserSessionTime = async (userId: any) => {
+export const GetSessionDataByCourseUserAndSessionId = async (courseId: string, userId: string, sessionId: string) => {
     try {
-        const sessions = await GetSessionDataByUserId(userId);
+        const sessions = await sessionStatsRepository
+            .createQueryBuilder('session')
+            .leftJoinAndSelect('session.modulesStats', 'moduleStats')
+            .where('session.courseId = :courseId', { courseId })
+            .andWhere('session.userId = :userId', { userId })
+            .andWhere('session.id = :sessionId', { sessionId }) // Add filter for sessionId
+            .getMany();
 
-        if (!Array.isArray(sessions)) {
-            return sessions;  
+        if (sessions.length === 0) {
+            return { message: 'No session stats found for this course, user, and session' };
         }
-        else{
 
-            const sessionTime = await GetAverageSessionTime(sessions);
-
-            return sessionTime;
-        }
+        return sessions;
     } catch (error) {
-        console.error('Error in GetUserSessionTimes:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
-    }
-};
-
-export const GetAverageUserSessionTimeForCourse = async (courseId: string, userId: any) => {
-    try {
-        const sessions = await GetSessionDataByCourseAndUserId(courseId, userId);
-        console.log(sessions);
-
-        if (!Array.isArray(sessions)) {
-            return sessions;  
-        }
-        else{
-
-            const sessionTime = await GetAverageSessionTime(sessions);
-
-            return sessionTime;
-        }
-    } catch (error) {
-        console.error('Error in GetUserSessionTimes:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
-    }
-};
-
-export const GetAverageSessionTime = (sessions: any[]) => {
-    try {
-        // Check if sessions data is available
-        if (!sessions || sessions.length === 0) {
-            return { message: 'No session data available' };
-        }
-
-        // Filter out sessions that haven't ended
-        const completedSessions = sessions.filter(session => session.sessionEnd && !isNaN(new Date(session.sessionEnd).getTime()));
-
-        if (completedSessions.length === 0) {
-            return { message: 'No completed sessions available to calculate average time' };
-        }
-
-        // Calculate total duration in milliseconds
-        const totalDurationMs = completedSessions.reduce((total, session) => {
-            const sessionStart = new Date(session.sessionStart).getTime();
-            const sessionEnd = new Date(session.sessionEnd).getTime();
-            return total + (sessionEnd - sessionStart);
-        }, 0);
-
-        // Calculate the average duration in milliseconds
-        const averageDurationMs = totalDurationMs / completedSessions.length;
-
-        // Convert milliseconds to hours and minutes
-        const hours = Math.floor(averageDurationMs / (1000 * 60 * 60));
-        const minutes = Math.floor((averageDurationMs % (1000 * 60 * 60)) / (1000 * 60));
-
-        // Format the result
-        const averageDuration = `${hours} hours ${minutes} minutes`;
-
-        return { averageDuration };
-    } catch (error) {
-        console.error('Error calculating average session time:', error);
+        console.error('Error fetching session stats:', error);
         return { message: 'Internal server error' };
     }
 };

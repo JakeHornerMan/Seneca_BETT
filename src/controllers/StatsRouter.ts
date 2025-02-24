@@ -6,7 +6,7 @@ import { SessionStats } from '../models/SessionStats';
 import { ModuleStats } from '../models/ModuleStats';
 import { GetUser } from './SessionRouter';
 import { validate } from 'uuid';
-import { GetCourseSessionTimes, GetSessionDataByCourseId } from '../service/StatService';
+import { GetSessionDataByCourseId, StatsOnCourse, StatsOnCourseSession } from '../service/StatService';
 
 const router = express.Router();
 
@@ -23,14 +23,27 @@ router.get('/sessions/:courseId', authenticateJWT, authorizeRole('admin'), async
     }
 });
 
-router.get('/averageTime/:courseId', authenticateJWT, authorizeRole('admin'), async (req: Request, res: Response) => {
+router.get('/courses/:courseId', authenticateJWT, authorizeRole('admin'), async (req: Request, res: Response) => {
     const { courseId } = req.params;
 
     try {
-        const sessionData = await GetCourseSessionTimes(courseId);
+        const sessionData = await StatsOnCourse(courseId);
         res.status(200).json(sessionData);
     } catch (error) {
-        console.error('Error fetching session stats:', error);
+        console.error('Error fetching stats:', error);
+        res.status(500).json({ message: 'Internal server error' });
+        return;
+    }
+});
+
+router.get('/courses/:courseId/sessions/:sessionId', authenticateJWT, authorizeRole('admin'), async (req: Request, res: Response) => {
+    const { courseId, sessionId } = req.params;
+
+    try {
+        const sessionData = await StatsOnCourseSession(courseId, sessionId);
+        res.status(200).json(sessionData);
+    } catch (error) {
+        console.error('Error fetching stats:', error);
         res.status(500).json({ message: 'Internal server error' });
         return;
     }
