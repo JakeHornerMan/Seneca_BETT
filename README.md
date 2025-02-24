@@ -7,8 +7,8 @@
 <h3>PLEAESE IMPORT 'SenecaPROD.postman_collection.json' IN POSTMAN (https://github.com/JakeHornerMan/Seneca_BETT/blob/main/SenecaPROD.postman_collection.json)<h3>
 <hr>
 
-##List of avalible Important endpoints
-###Authentication
+## List of avalible Important endpoints
+### Authentication
 <b>/auth/register</b><br/>
 <p>This allow us to register a new user, and also allows us to se the role of the user</p>
 <i>input: <br/>
@@ -30,7 +30,7 @@
 </i>
 <br/>
 
-###Admin Stat Functionality
+### Admin Stat Functionality
 
 <b>(ADMIN)/stats/sessions/:sessionId</b> <br/>
 <p>This will gather all session data based on the sessionId</p>
@@ -82,7 +82,7 @@
 </i>
 <br/>
 
-###User Stat Functionality
+### User Stat Functionality
 
 <b>(USER)/stats/user/sessions</b> <br/>
 <p>This will gather all session data based on the user logged in</p>
@@ -134,4 +134,4 @@
 </i>
 <br/>
 
-###User Session Functionality
+### User Session Functionality
