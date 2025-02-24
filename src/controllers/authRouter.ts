@@ -7,28 +7,22 @@ import { AppDataSource } from '../repositorys/appDataSource';
 const router = express.Router();
 const userRepository = AppDataSource.getRepository(User);
   
-// User registration route
 router.post('/register', async (req: Request, res: Response) => {
     const { username, email, password, role } = req.body;
 
-    // Validate input
     if (!username || !email || !password || !role) {
         res.status(400).json({ message: 'Missing required fields' });
         return;
     }
 
-    // Check if username or email is already taken
     const existingUser = await userRepository.findOne({ where: [{ username }, { email }] });
     if (existingUser) {
         res.status(400).json({ message: 'Username or email already in use' });
         return;
     }
     
-
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user
     const newUser = userRepository.create({
         username,
         email,
@@ -36,7 +30,6 @@ router.post('/register', async (req: Request, res: Response) => {
         role,
     });
 
-    // Save the new user to db
     await userRepository.save(newUser);
 
     res.status(201).json({ message: 'User registered successfully' });

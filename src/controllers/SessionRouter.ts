@@ -16,10 +16,10 @@ export const DoesCourseContainTopic = (course: any, topic: string): boolean => {
 };
 
 export const GetUser = (req: Request): UserPayload|undefined => {
-    const authHeader = req.headers.authorization; // Get 'Authorization' header
+    const authHeader = req.headers.authorization;
 
     if (authHeader){
-        const token = authHeader.split(' ')[1]; // Extract the token (after 'Bearer ')
+        const token = authHeader.split(' ')[1];
 
         // console.log('Extracted Token:', token);
         return verifyToken(token);
@@ -51,7 +51,6 @@ router.post('/startSession', authenticateJWT, authorizeRole('user'), async (req:
     }
 
     try {
-        // Create SessionStats first
         const sessionStats = sessionStatsRepository.create({
             userId:user.id,
             courseId:course.id,
@@ -60,7 +59,6 @@ router.post('/startSession', authenticateJWT, authorizeRole('user'), async (req:
             sessionStart: new Date(),
         });
 
-        // Save SessionStats and get the saved entity (this will give us the ID)
         const savedSessionStats = await sessionStatsRepository.save(sessionStats);
 
         // Return a successful response
@@ -106,14 +104,11 @@ router.put('/endSession', authenticateJWT, authorizeRole('user'), async (req: Re
             return;
         }
 
-        // Update sessionEnd to the current timestamp and set isEnd to true
         sessionStats.sessionEnd = new Date();
         sessionStats.isEnd = true;
 
-        // Save the updated session
         await sessionStatsRepository.save(sessionStats);
 
-        // Return a successful response
         res.status(200).json({
             message: 'Session ended successfully',
             sessionId: sessionStats.id,
@@ -126,7 +121,7 @@ router.put('/endSession', authenticateJWT, authorizeRole('user'), async (req: Re
 });
 
 router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req: Request, res: Response) => {
-    const { sessionId, moduleStats } = req.body;  // Get sessionId and moduleStats from the request body
+    const { sessionId, moduleStats } = req.body; 
 
     if (!sessionId || !moduleStats) {
         res.status(400).json({ message: 'Session ID and module stats are required' });
@@ -134,10 +129,9 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
     }
 
     try {
-        // Find the session by sessionId and load existing modules
         const sessionStats = await sessionStatsRepository.findOne({
             where: { id: sessionId },
-            relations: ['modulesStats','userId'], // Load existing modulesStats
+            relations: ['modulesStats','userId'],
         });
 
         if (!sessionStats) {
@@ -156,7 +150,6 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
             return;
         }
 
-        // Ensure moduleStats is a valid array
         if (!Array.isArray(moduleStats) || moduleStats.length === 0) {
             res.status(400).json({ message: 'Module stats must be a non-empty array' });
             return;
@@ -165,16 +158,13 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
         let totalSessionPoints = 0;
         let updatedModulesStats;
         if(sessionStats.modulesStats){
-            // Create a map of existing modules by moduleName for easy lookup
             const existingModulesMap = new Map(sessionStats.modulesStats.map(mod => [mod.moduleName, mod]));
 
-            // Process each incoming moduleStats entry
             updatedModulesStats = await Promise.all(
                 moduleStats.map(async (module: any) => {
                     const existingModule = existingModulesMap.get(module.moduleName);
 
                     if (existingModule) {
-                        // Update the existing module
                         existingModule.adaptive = module.adaptive ?? existingModule.adaptive;
                         console.log('Existing Adaptive:', existingModule.adaptive);
                         existingModule.quiz = module.quiz ?? existingModule.quiz;
@@ -185,13 +175,9 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
                         let adaptiveScore = 0;
                         if(module.adaptive?.score)
                             adaptiveScore = module.adaptive?.score;
-                        // console.log('Adaptive Score:', adaptiveScore);
                         if(module.quiz?.score)
                             quizScore = module.quiz?.score;
-                        // console.log('Quiz Score:', quizScore);
                         totalSessionPoints += adaptiveScore + quizScore;
-
-                        // console.log('Total Session Points: Existing: ', totalSessionPoints);
                         return moduleStatsRepository.save(existingModule);
                     } else {
                         // Create a new module entry
@@ -200,18 +186,15 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
                             adaptive: module.adaptive ?? [],
                             quiz: module.quiz ?? [],
                             wrongAnswers: module.wrongAnswers ?? [],
-                            sessionStats: sessionStats,  // Link module to session
+                            sessionStats: sessionStats,
                         });
                         let quizScore = 0;
                         let adaptiveScore = 0;
                         if(module.adaptive?.score)
                             adaptiveScore = module.adaptive?.score;
-                        // console.log('Adaptive Score:', adaptiveScore);
                         if(module.quiz?.score)
                             quizScore = module.quiz?.score;
-                        // console.log('Quiz Score:', quizScore);
                         totalSessionPoints += adaptiveScore + quizScore;
-                        // console.log('Total Session Points: New: ', totalSessionPoints);
                         return moduleStatsRepository.save(newModule);
                     }
                 })
@@ -223,12 +206,10 @@ router.put('/updateSession', authenticateJWT, authorizeRole('user'), async (req:
 
         console.log('Updated Modules:', updatedModulesStats);
 
-        // Update the session's modulesStats
         sessionStats.modulesStats = updatedModulesStats;
         sessionStats.sessionEnd = new Date();
         sessionStats.sessionPoints = totalSessionPoints;
 
-        // Save the updated session
         await sessionStatsRepository.save(sessionStats);
 
         res.status(200).json({

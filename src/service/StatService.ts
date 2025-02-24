@@ -26,7 +26,7 @@ export const UserStatsOnCourse = async (courseId: string, userId: any) => {
         }
     } catch (error) {
         console.error('Error in StatsOnCourseSessions:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
+        return { message: 'Internal server error' }; 
     }
 };
 
@@ -51,7 +51,7 @@ export const StatsOnCourse = async (courseId: string) => {
         }
     } catch (error) {
         console.error('Error in StatsOnCourseSessions:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
+        return { message: 'Internal server error' };
     }
 };
 
@@ -77,7 +77,7 @@ export const UserStatsOnCourseSession = async (courseId: string, userId: any, se
         }
     } catch (error) {
         console.error('Error in StatsOnCourseSessions:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
+        return { message: 'Internal server error' };
     }
 };
 
@@ -103,7 +103,7 @@ export const StatsOnCourseSession = async (courseId: string, sessionId: any) => 
         }
     } catch (error) {
         console.error('Error in StatsOnCourseSessions:', error);
-        return { message: 'Internal server error' };  // Return a general internal server error
+        return { message: 'Internal server error' };
     }
 };
 
@@ -176,11 +176,9 @@ export const GetTotalSessionTime = (sessions: any[]) => {
             totalDurationInMs += durationInMs;
         });
 
-        // Convert the total duration in milliseconds to hours and minutes
         const totalHours = Math.floor(totalDurationInMs / (1000 * 60 * 60));
         const totalMinutes = Math.floor((totalDurationInMs % (1000 * 60 * 60)) / (1000 * 60));
 
-        // Calculate total time in minutes
         const timeInMinutes = Math.floor(totalDurationInMs / (1000 * 60));
 
         const totalDuration = `${totalHours} hours ${totalMinutes} minutes`;
@@ -256,7 +254,7 @@ export const GetSessionDataByCourseAndSessionId = async (courseId: string, sessi
             .createQueryBuilder('session')
             .leftJoinAndSelect('session.modulesStats', 'moduleStats')
             .where('session.courseId = :courseId', { courseId })
-            .andWhere('session.id = :sessionId', { sessionId }) // Add filter for sessionId
+            .andWhere('session.id = :sessionId', { sessionId })
             .getMany();
 
         if (sessions.length === 0) {
@@ -277,7 +275,7 @@ export const GetSessionDataByCourseUserAndSessionId = async (courseId: string, u
             .leftJoinAndSelect('session.modulesStats', 'moduleStats')
             .where('session.courseId = :courseId', { courseId })
             .andWhere('session.userId = :userId', { userId })
-            .andWhere('session.id = :sessionId', { sessionId }) // Add filter for sessionId
+            .andWhere('session.id = :sessionId', { sessionId })
             .getMany();
 
         if (sessions.length === 0) {

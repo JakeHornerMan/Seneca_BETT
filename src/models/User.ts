@@ -10,7 +10,7 @@ export class User {
     @Column({ unique: true })
     email!: string;
     @Column()
-    password!: string; // Hashed password
+    password!: string; 
     @Column()
     role!: 'user' | 'admin';
     @CreateDateColumn()

@@ -19,6 +19,6 @@ export class ModuleStats {
     wrongAnswers?: { answers: string[], isCompleted: boolean, score: number};
 
     @ManyToOne(() => SessionStats, sessionStats => sessionStats.modulesStats)
-    @JoinColumn({ name: 'sessionId' })  // The foreign key column name in ModuleStats
+    @JoinColumn({ name: 'sessionId' })
     sessionStats!: SessionStats;
 }

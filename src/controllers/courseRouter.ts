@@ -69,37 +69,31 @@ router.post("/create", authenticateJWT, authorizeRole('admin'), async(req: Reque
 });
 
 router.put('/:courseIdentifier', authenticateJWT, authorizeRole('admin'), async (req: Request, res: Response) => {
-    const { courseIdentifier } = req.params;  // Retrieve the course identifier (courseTitle or courseId) from URL params
-    const { courseTitle, qualification, topicsAndModules } = req.body; // Extract the new course data from request body
+    const { courseIdentifier } = req.params;  
+    const { courseTitle, qualification, topicsAndModules } = req.body; 
 
     try {
         let course;
 
-        // Try to find course by ID (if courseIdentifier is a number)
         if (!isNaN(Number(courseIdentifier))) {
             course = await courseRepository.findOne({ where: { id: courseIdentifier } });
         }
 
-        // If course not found by ID, try to find it by courseTitle (if it's a string)
         if (!course) {
             course = await courseRepository.findOne({ where: { courseTitle: courseIdentifier } });
         }
 
-        // If no course is found, return 404
         if (!course) {
             res.status(404).json({ message: 'Course not found' });
             return;
         }
 
-        // Update the course fields (only the fields passed in the request body)
         if (courseTitle) course.courseTitle = courseTitle;
         if (qualification) course.qualification = qualification;
         if (topicsAndModules) course.topicsAndModules = topicsAndModules;
 
-        // Save the updated course to the database
         await courseRepository.save(course);
 
-        // Return the updated course details
         res.status(200).json(course);
 
     } catch (error) {

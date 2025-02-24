@@ -3,7 +3,7 @@ export interface User {
     id: string;
     username: string;
     email: string;
-    password: string; // Hashed password
+    password: string; 
     role: 'user' | 'admin';
     createdAt: Date;
 }
@@ -21,8 +21,8 @@ export interface SessionStats {
     sessionStatId: number;
     courseId: number;
     userId: number;
-    modulesCompleted?: string; // JSON string representing completed modules
-    sessionDuration?: string; // Assuming time is stored as a string (ISO 8601 format)
+    modulesCompleted?: string;
+    sessionDuration?: string;
     score?: number;
     sessionStart?: Date;
     sessionEnd?: Date;
