@@ -7,6 +7,12 @@
 <hr>
 
 <h3>List of avalible endpoints</h3>
-<b>/auth/register</b>
-<i>input:</i>
-
+<b>/auth/register</b><br/>
+<i>input: <br/>
+{<br/>
+  "username": "prodadmin",<br/>
+  "email": "prodadmin.test@example.com",<br/>
+  "password": "securePassword123",<br/>
+  "role": "admin"<br/>
+}<br/>
+</i>
