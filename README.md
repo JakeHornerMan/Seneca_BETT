@@ -2,9 +2,10 @@
 >Seneca backend technical task, Node.js, TypeScript, Express TypeORM. 
 >I Created a backend service that will allow users to register as standard user or admin. 
 ><li>Admin can create Courses and view stats for any session, user or course. </li>
-><li>Users can  start, update and end thie own sessions adding their own session and module results data</li>
+><li>Users can  start, update and end thier own sessions adding their own session and module results data. They can also view the course and session related stats attched to them. </li>
 
 <h3>PLEAESE IMPORT 'SenecaPROD.postman_collection.json' IN POSTMAN (https://github.com/JakeHornerMan/Seneca_BETT/blob/main/SenecaPROD.postman_collection.json)<h3>
+<h3>PLEAESE Read 'Seneca backend technical task Deployment Task.pdf' IN REPO (https://github.com/JakeHornerMan/Seneca_BETT/blob/main/Seneca%20backend%20technical%20task%20Deployment%20Task.pdf)<h3>
 <hr>
 
 ## List of avalible Important endpoints
