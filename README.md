@@ -135,3 +135,52 @@
 <br/>
 
 ### User Session Functionality
+
+<b>(USER)session/startSession</b><br/>
+<p>This will start a learning session for the current user</p>
+<i>input: <br/>
+{<br/>
+    "courseIdentifier": "9e263811-0cfb-45f0-a0f9-c155c916dfed",<br/>
+    "topic": "Geometry"<br/>
+}<br/>
+output: <br/>
+{<br/>
+    "message": "Session started created successfully",<br/>
+    "sessionId": "d0a99f23-c8f0-4fc3-9d99-665618d545ae"<br/>
+}<br/>
+</i>
+<br/>
+
+<b>(USER)session/updateSession</b><br/>
+<p>This will update a learning session for the current user with the modules and it results</p>
+<i>input: <br/>
+{<br/>
+  "sessionId": "d0a99f23-c8f0-4fc3-9d99-665618d545ae",<br/>
+  "moduleStats": [<br/>
+    {<br/>
+      "moduleName": "Module 1",<br/>
+      "adaptive": {"answers": ["A", "B"], "isCompleted": false, "score": 10},<br/>
+      "quiz":{"answers": ["A", "B"], "isCompleted": false, "score": 20}<br/>
+    },<br/>
+    {<br/>
+      "moduleName": "Module 2",<br/>
+      "quiz": {"answers": ["A", "B"], "isCompleted": false, "score": 10}<br/>
+    },<br/>
+    {<br/>
+      "moduleName": "Module 3",<br/>
+      "adaptive": {"answers": ["A", "B"], "isCompleted": false, "score": 40},<br/>
+      "quiz": {"answers": ["A", "B"], "isCompleted": false, "score": 2}<br/>
+    }<br/>
+  ]<br/>
+}<br/>
+</i>
+<br/>
+
+<b>(USER)session/endSession</b><br/>
+<p>This will end a learning session for the current user</p>
+<i>input: <br/>
+{<br/>
+  "sessionId": "d0a99f23-c8f0-4fc3-9d99-665618d545ae"<br/>
+}<br/>
+</i>
+<br/>
