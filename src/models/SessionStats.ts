@@ -6,7 +6,7 @@ import { ModuleStats } from "./ModuleStats";
 @Entity()
 export class SessionStats {
     @PrimaryGeneratedColumn('uuid')
-    id!: number;
+    id!: string;
 
     @Index()
     @ManyToOne(() => User)

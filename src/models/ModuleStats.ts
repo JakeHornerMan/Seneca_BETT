@@ -4,7 +4,7 @@ import { SessionStats } from "./SessionStats";
 @Entity()
 export class ModuleStats {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: string;
 
     @Column()
     moduleName!: string;
