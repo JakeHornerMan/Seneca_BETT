@@ -61,7 +61,7 @@ describe("GET /stats/sessions/:courseId", () => {
         jest.clearAllMocks();
     });
 
-    it("should return session stats for a given course ID", async () => {
+    it("should return sessions for a given course ID", async () => {
         (GetSessionDataByCourseId as jest.Mock).mockResolvedValue(mockResponse);
 
         const courseId = "a1b2c3d4-e5f6-7890-abcd-ef1234567890"; // Example course ID
