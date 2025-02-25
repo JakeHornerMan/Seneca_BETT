@@ -8,6 +8,8 @@ C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install @types/jsonwebtoken @ty
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install typeorm
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install pg --save
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install uuid
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm i -D jest @types/jest
+C:\Users\jakeh\Documents\GitHub\Seneca_BETT> npm install -D supertest @types/supertest
 
 //DB
 C:\Users\jakeh\Documents\GitHub\Seneca_BETT> docker-compose up -d

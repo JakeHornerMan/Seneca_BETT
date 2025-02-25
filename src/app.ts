@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
-import testRoutes from './controllers/test';
+import testRoutes from './controllers/testRouter';
 import courseRouter from './controllers/courseRouter';
 import authRouter from './controllers/authRouter';
 import sessionRouter from './controllers/SessionRouter';
