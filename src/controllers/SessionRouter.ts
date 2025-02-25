@@ -4,7 +4,7 @@ import { authorizeRole } from '../middlewares/roleMiddleware';
 import { AppDataSource } from '../repositorys/appDataSource';
 import { SessionStats } from '../models/SessionStats';
 import { ModuleStats } from '../models/ModuleStats';
-import { UserPayload, verifyToken } from '../utils/jwt';
+import { GetUser, UserPayload, verifyToken } from '../utils/jwt';
 import { GetCourse } from './courseRouter';
 
 const router = express.Router();
@@ -13,17 +13,6 @@ const moduleStatsRepository = AppDataSource.getRepository(ModuleStats);
 
 export const DoesCourseContainTopic = (course: any, topic: string): boolean => {
     return course.topicsAndModules.some((element: any) => element.topic === topic);
-};
-
-export const GetUser = (req: Request): UserPayload|undefined => {
-    const authHeader = req.headers.authorization;
-
-    if (authHeader){
-        const token = authHeader.split(' ')[1];
-
-        // console.log('Extracted Token:', token);
-        return verifyToken(token);
-    }
 };
 
 router.post('/startSession', authenticateJWT, authorizeRole('user'), async (req: Request, res: Response) => {

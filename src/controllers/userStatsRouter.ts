@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { authenticateJWT } from '../middlewares/authMiddleware';
 import { authorizeRole } from '../middlewares/roleMiddleware';
-import { GetUser } from './SessionRouter';
+import { GetUser } from '../utils/jwt';
 import { GetSessionDataByUserId, UserStatsOnCourse, UserStatsOnCourseSession } from '../service/StatService';
 
 const router = express.Router();

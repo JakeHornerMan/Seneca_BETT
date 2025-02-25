@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import express from 'express';
 
 const SECRET_KEY = process.env.JWT_SECRET_KEY || 'secret';
 
@@ -22,5 +23,16 @@ export const verifyToken = (token: string): UserPayload => {
     } catch (error) {
         console.log(error);
         throw new Error('Invalid token');
+    }
+};
+
+export const GetUser = (req: express.Request): UserPayload|undefined => {
+    const authHeader = req.headers.authorization;
+
+    if (authHeader){
+        const token = authHeader.split(' ')[1];
+
+        // console.log('Extracted Token:', token);
+        return verifyToken(token);
     }
 };
