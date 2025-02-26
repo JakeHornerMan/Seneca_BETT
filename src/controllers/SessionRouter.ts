@@ -41,8 +41,8 @@ router.post('/startSession', authenticateJWT, authorizeRole('user'), async (req:
 
     try {
         const sessionStats = sessionStatsRepository.create({
-            userId:user.id,
-            courseId:course.id,
+            userId: { id: user.id } as any,
+            courseId: { id: course.id } as any,
             courseTitle:course.courseTitle,
             topic,
             sessionStart: new Date(),

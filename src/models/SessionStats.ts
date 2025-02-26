@@ -11,7 +11,7 @@ export class SessionStats {
     @Index()
     @ManyToOne(() => User)
     @JoinColumn({ name: 'userId' })
-    userId!: number;
+    userId!: User;
 
     @Index()
     @ManyToOne(() => Course)

@@ -4,7 +4,7 @@ import { authorizeRole } from '../middlewares/roleMiddleware';
 import { AppDataSource } from '../repositorys/appDataSource';
 import { SessionStats } from '../models/SessionStats';
 import { ModuleStats } from '../models/ModuleStats';
-import { GetUser } from './SessionRouter';
+import { GetUser } from '../utils/jwt';
 import { validate } from 'uuid';
 import { GetSessionDataByCourseId, StatsOnCourse, StatsOnCourseSession } from '../service/StatService';
 
