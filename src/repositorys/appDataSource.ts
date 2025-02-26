@@ -24,9 +24,9 @@ export const AppDataSource = new DataSource({
     entities: [User, Course, SessionStats, ModuleStats],
     subscribers: [],
     migrations: [],
-    // extra: {
-    //     ssl: {
-    //         rejectUnauthorized: false, // Bypass certificate validation
-    //     },
-    // },
+    extra: {
+        ssl: {
+            rejectUnauthorized: false, // Bypass certificate validation
+        },
+    },
 });

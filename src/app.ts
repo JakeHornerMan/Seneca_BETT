@@ -9,7 +9,7 @@ import statsRouter from './controllers/StatsRouter';
 import userStatsRouter from './controllers/userStatsRouter';
 import { AppDataSource } from './repositorys/appDataSource';
 
-export const app: express.Application = express();
+const app: express.Application = express();
 
 const port = process.env.PORT || 3000;
 const dbhost = process.env.DB_HOST || 'localhost';
